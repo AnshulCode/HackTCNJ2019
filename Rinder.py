@@ -3,9 +3,9 @@ import requests
 import recieveJSON
 import json
 
-CrimeServer = Flask(__name__)
+Rinder = Flask(__name__)
 
-@CrimeServer.route('/')
+@Rinder.route('/')
 def apiRequest():
     s = ""
     y = recieveJSON.getRestaurants("restaurants", -74.7771916 , 40.272249099999996, 50)['businesses']
@@ -13,4 +13,4 @@ def apiRequest():
         s+= i['name'] + "<br/>"
     return s
 if __name__ == '__main__':
-    CrimeServer.run() 
+    Rinder.run(host='0.0.0.0') 
