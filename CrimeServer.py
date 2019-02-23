@@ -1,13 +1,16 @@
 from flask import Flask
 import requests
-import YelpAPI
+import recieveJSON
 import json
 
 CrimeServer = Flask(__name__)
 
 @CrimeServer.route('/')
 def apiRequest():
-    y = json.load(YelpAPI.getRestaurants("icecream", -74.7771916 , 40.272249099999996, 5))
-    return y.text()
+    s = ""
+    y = recieveJSON.getRestaurants("restaurants", -74.7771916 , 40.272249099999996, 50)['businesses']
+    for i in y:
+        s+= i['name'] + "<br/>"
+    return s
 if __name__ == '__main__':
     CrimeServer.run() 
