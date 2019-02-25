@@ -2,15 +2,34 @@ from flask import Flask
 import requests
 import recieveJSON
 import json
+from flask import request
+import jsonify
+from collections import defaultdict
+
+
 
 Rinder = Flask(__name__)
 
-@Rinder.route('/')
+appList = defaultdict(list)
+
+@Rinder.route('/', methods = ['GET','POST'])
 def apiRequest():
-    s = ""
-    y = recieveJSON.getRestaurants("restaurants", -74.7771916 , 40.272249099999996, 50)['businesses']
-    for i in y:
-        s+= i['name'] + "<br/>"
-    return s
+    
+    lon = ""
+    lat = ""
+    resp = ""
+    apiData = ""
+    data = ""
+   
+    if request.method == 'POST':
+       resp = request.json
+       lon = resp['Lon:']
+       lat = resp['Lat:']
+       apiData = recieveJSON.getRestaurants("Restaurant", lon, lat , 10)
+       print(apiData)
+       for i in range(0,len(apiData)):
+          data +=  "name:" + apiData[i]['name']+ "," + "address:" + apiData[i]['location']['display_address'][0]+ "" + apiData[i]['location']['display_address'][1]+ "," + "distance:" + str(apiData[i]['distance']/1609) + " "
+       print(data)
+    
 if __name__ == '__main__':
-    Rinder.run(host='0.0.0.0') 
+    Rinder.run()   

@@ -1,0 +1,7 @@
+ apiData = recieveJSON.getRestaurants("restaurants", lon, lat, 3)['businesses']
+       #print(apiData)
+       print(len(apiData))
+       for i in range(0,len(apiData)):
+          data+= "name:" + apiData[i]['name']+ "," + "address:" + apiData[i]['location']['display_address'][0]+ "" + apiData[i]['location']['display_address'][0]+ "," +"distance:" + str(apiData[i]['distance']/1609) + "</br>"
+    print(data)
+    return '<hi> the data is'+data+' </h1>'
